@@ -24,7 +24,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//The earthquake activity class. Checks for network connectivity and loads the loader.
 public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Earthquake>> {
     private EarthquakeAdapter mAdapter;
     private TextView mEmptyStateTextView;
@@ -35,15 +35,11 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquakelist);
-        // Find a reference to the {@link ListView} in the layout
         ListView earthquakelistview = findViewById(R.id.earthquakelist);
         mEmptyStateTextView = findViewById(R.id.empty_view);
         earthquakelistview.setEmptyView(mEmptyStateTextView);
-        // Create a new {@link ArrayAdapter} of earthquakes
         mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
 
-        // Set the adapter on the {@link ListView}
-        // so the list can be populated in the user interface
         earthquakelistview.setAdapter(mAdapter);
         earthquakelistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -55,27 +51,17 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
                 startActivity(i);
             }
         });
-        // Get a reference to the ConnectivityManager to check state of network connectivity
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        // Get details on the currently active default data network
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        // If there is a network connection, fetch data
         if (networkInfo != null && networkInfo.isConnected()) {
-            // Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
-            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-            // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(1, null, this);
         } else {
-            // Otherwise, display error
-            // First, hide loading indicator so error message will be visible
             View loadingIndicator = findViewById(R.id.progress);
             loadingIndicator.setVisibility(View.GONE);
-            // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet_connection);
         }
         LoaderManager loaderManager = getLoaderManager();
@@ -125,8 +111,6 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(@NonNull Loader<List<Earthquake>> loader, List<Earthquake> data) {
         mAdapter.clear();
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
-        // data set. This will trigger the ListView to update.
 
         if (data != null && !data.isEmpty()) {
             mAdapter.addAll(data);

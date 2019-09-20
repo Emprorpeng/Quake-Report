@@ -1,5 +1,5 @@
 package com.example.empro.quake_report;
-
+//The earthquake POJO class
 public class Earthquake {
     private double mMagnitude;
     private String mPlace;

@@ -14,7 +14,7 @@ import java.util.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import android.graphics.drawable.GradientDrawable;
-
+//Earthquake adapter that is called to set information into the list view
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     public EarthquakeAdapter(@NonNull Activity context, ArrayList<Earthquake> earthquake) {
         super(context,0, earthquake);
@@ -79,9 +79,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         TextView Magnitude = listItemView.findViewById(R.id.Magnitude);
         GradientDrawable magnitudeCircle = (GradientDrawable) Magnitude.getBackground();
-        // Get the appropriate background color based on the current earthquake magnitude
         int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
-        // Set the color on the magnitude circle
         magnitudeCircle.setColor(magnitudeColor);
         Magnitude.setText(decimalFormat.format(currentEarthquake.getMagnitude()));
         TextView Place =listItemView.findViewById(R.id.Place);
@@ -97,19 +95,14 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         }
         Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
 
-        // Find the TextView with view ID date
-        TextView dateView = (TextView) listItemView.findViewById(R.id.Date);
-        // Format the date string (i.e. "Mar 3, 1984")
+
+        TextView dateView = listItemView.findViewById(R.id.Date);
         String formattedDate = formatDate(dateObject);
-        // Display the date of the current earthquake in that TextView
         dateView.setText(formattedDate);
 
-        // Find the TextView with view ID time
-        TextView timeView = (TextView) listItemView.findViewById(R.id.time);
-        // Format the time string (i.e. "4:30PM")
+
+        TextView timeView = listItemView.findViewById(R.id.time);
         String formattedTime = formatTime(dateObject);
-        // Display the time of the current earthquake in that TextView
         timeView.setText(formattedTime);
-        // Return the list item view that is now showing the appropriate data
         return listItemView;
     }}

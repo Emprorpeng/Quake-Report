@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import static com.example.empro.quake_report.R.layout.settings_main;
-
+//The activity called when the settings menu item is selected.
 public class SettingsActivty extends AppCompatActivity {
 
     @Override
